@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bagic Group CF Form</title>
+  </head>
+  <body>
+    <div id="group-info">
+      <!-- Group info will be displayed here dynamically -->
+    </div>
+
+    <script type="module">
+      const chatComponentsDirective =
+        window.location.hostname == "localhost" ? "" : "/components";
+      const yappsWidgetPath = `${chatComponentsDirective}/package/@yellow/yapps/dist/widget.js`;
+      const module = await import(yappsWidgetPath);
+      const { YAppWidget } = module;
+      const yAppWidget = new YAppWidget();
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const myParam = urlParams.get("myParam");
+
+      const GroupCFMap = {
+        "0000": "Service",
+        "0001": "Sales",
+      };
+
+      (async () => {
+        const targetCFId = urlParams.get("cfId");
+        const targetCFLevel = urlParams.get("cfLevel");
+        const targetCFLevelIndex = Number(targetCFLevel);
+
+        if (!targetCFId || !targetCFLevel) return;
+
+        const ticketInfo = await yAppWidget.getTicket();
+
+        const { customFields, ticketDetails } =
+          ticketInfo.eventResponse.eventData;
+
+        const { category: groupCode, customFields: ticketCustomFields } =
+          ticketDetails;
+        if (!groupCode) {
+          console.warn(`group_cf_form: categorynot found in ticket details`);
+          await yAppWidget.enableTicketCF(
+            `${targetCFId}-${targetCFLevelIndex}`
+          );
+          return;
+        }
+
+        const targetCF = customFields.find((cf) => cf.id === targetCFId);
+        if (!targetCF) {
+          console.warn(`group_cf_form: targetCF for ${targetCFId} not found`);
+          return;
+        }
+
+        const targetCFLevelOptions = targetCF.options[targetCFLevelIndex];
+        const targetOption = targetCFLevelOptions.find(
+          (o) => o.name === GroupCFMap[groupCode]
+        );
+        if (!targetOption) {
+          console.warn(
+            `group_cf_form: targetOption for ${groupCode} not found`
+          );
+          return;
+        }
+
+        const targetLevelName = targetCF.levels[targetCFLevelIndex];
+
+        console.log(
+          `group_cf_form, ${targetCFId}, ${targetOption.name}, ${targetLevelName}`
+        );
+
+        await yAppWidget.disableTicketCF(`${targetCFId}-${targetCFLevelIndex}`);
+
+        // dont update anything if the right value is already selected.
+        // to make sure we dont reset the hf's values.
+        const currentCFValue =
+          ticketCustomFields?.[targetCFId]?.[targetCFLevelIndex];
+        if (currentCFValue?.name === targetOption.name) return;
+
+        await yAppWidget.updateTicketCF({
+          [targetCFId]: [
+            {
+              id: targetOption.id,
+              levelName: targetLevelName,
+              name: targetOption.name,
+            },
+          ],
+        });
+      })();
+    </script>
+  </body>
+</html>
