@@ -38,10 +38,6 @@
 
         console.log(ticketInfo, 'ticketInfo')
 
-        const agent = await yAppWidget.getAgent();
-
-         console.log(agent, 'agent details')
-
         const { customFields, ticketDetails } = ticketInfo.eventResponse.eventData;
  console.log(customFields, 'customFields');
         const { category: groupCode, customFields: ticketCustomFields } = ticketDetails;
