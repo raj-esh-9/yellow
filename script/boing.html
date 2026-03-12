@@ -34,6 +34,8 @@
 
         const ticketInfo = await yAppWidget.getTicket();
 
+        console.log(ticketInfo, 'ticketInfo')
+
         const { customFields, ticketDetails } =
           ticketInfo.eventResponse.eventData;
 
@@ -48,6 +50,7 @@
         }
 
         const targetCF = customFields.find((cf) => cf.id === targetCFId);
+         console.log(targetCF, 'targetCF')
         if (!targetCF) {
           console.warn(`group_cf_form: targetCF for ${targetCFId} not found`);
           return;
