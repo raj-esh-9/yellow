@@ -36,11 +36,16 @@
 
         console.log(ticketInfo, 'ticketInfo')
 
-        const { customFields, ticketDetails } =
-          ticketInfo.eventResponse.eventData;
+        const agent = await yAppWidget.getAgent();
 
-        const { category: groupCode, customFields: ticketCustomFields } =
-          ticketDetails;
+         console.log(agent, 'agent details')
+
+        const { customFields, ticketDetails } = ticketInfo.eventResponse.eventData;
+ console.log(customFields, 'customFields');
+        const { category: groupCode, customFields: ticketCustomFields } = ticketDetails;
+        console.log(groupCode, 'groupCode')
+        console.log(ticketCustomFields, 'ticketCustomFields')
+        
         if (!groupCode) {
           console.warn(`group_cf_form: categorynot found in ticket details`);
           await yAppWidget.enableTicketCF(
