@@ -32,6 +32,8 @@
 
         if (!targetCFId || !targetCFLevel) return;
 
+        try{
+
         const ticketInfo = await yAppWidget.getTicket();
 
         console.log(ticketInfo, 'ticketInfo')
@@ -95,6 +97,7 @@
             },
           ],
         });
+        }catch(err){ console.log(err, "Error") }
       })();
     </script>
   </body>
