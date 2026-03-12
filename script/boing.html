@@ -11,8 +11,7 @@
     </div>
 
     <script type="module">
-      const chatComponentsDirective =
-        window.location.hostname == "localhost" ? "" : "/components";
+      const chatComponentsDirective ="https://app.yellowmessenger.com/components"
       const yappsWidgetPath = `${chatComponentsDirective}/package/@yellow/yapps/dist/widget.js`;
       const module = await import(yappsWidgetPath);
       const { YAppWidget } = module;
