@@ -76,6 +76,9 @@
           `group_cf_form, ${targetCFId}, ${targetOption.name}, ${targetLevelName}`
         );
 
+          const agent = await yAppWidget.getAgent();
+          console.log(agent, 'agent details')
+
         await yAppWidget.disableTicketCF(`${targetCFId}-${targetCFLevelIndex}`);
 
         // dont update anything if the right value is already selected.
@@ -93,6 +96,7 @@
             },
           ],
         });
+          
         }catch(err){ console.log(err, "Error") }
       })();
     </script>
