@@ -79,23 +79,11 @@
           const agent = await yAppWidget.getAgent();
           console.log(agent, 'agent details')
 
-        // dont update anything if the right value is already selected.
-        // to make sure we dont reset the hf's values.
         const currentCFValue = ticketCustomFields?.[targetCFId]?.[targetCFLevelIndex];
         if (currentCFValue?.name === targetOption.name){ 
           await yAppWidget.disableTicketCF(`${targetCFId}-${targetCFLevelIndex}`);
           return; 
         }
-
-        // await yAppWidget.updateTicketCF({
-        //   [targetCFId]: [
-        //     {
-        //       id: targetOption.id,
-        //       levelName: targetLevelName,
-        //       name: targetOption.name,
-        //     },
-        //   ],
-        // });
           
         }catch(err){ console.log(err, "Error") }
       })();
