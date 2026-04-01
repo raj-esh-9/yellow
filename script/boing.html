@@ -76,11 +76,10 @@
           `group_cf_form, ${targetCFId}, ${targetOption.name}, ${targetLevelName}`
         );
 
-          const agent = await yAppWidget.getAgent();
-          console.log(agent, 'agent details')
-
         const currentCFValue = ticketCustomFields?.[targetCFId]?.[targetCFLevelIndex];
+          console.log(currentCFValue, 'currentCFValue Final')
         if (currentCFValue?.name === targetOption.name){ 
+           console.log('disableTicketCF===>')
           await yAppWidget.disableTicketCF(`${targetCFId}-${targetCFLevelIndex}`);
           return; 
         }
