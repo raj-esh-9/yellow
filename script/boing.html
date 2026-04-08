@@ -11,26 +11,26 @@
     </div>
 
     <script type="module">
-      // const chatComponentsDirective ="https://app.yellowmessenger.com/components"
-      // const yappsWidgetPath = `${chatComponentsDirective}/package/@yellow/yapps/dist/widget.js`;
-      // const module = await import(yappsWidgetPath);
-      // const { YAppWidget } = module;
-      // const yAppWidget = new YAppWidget();
-
-      // const urlParams = new URLSearchParams(window.location.search);
-      // const myParam = urlParams.get("myParam");
-
-      const chatComponentsDirective = window.location.hostname == "localhost" ? "" : "/components";
-      console.log(chatComponentsDirective, "chatComponentsDirective")
+      const chatComponentsDirective ="https://app.yellowmessenger.com/components"
       const yappsWidgetPath = `${chatComponentsDirective}/package/@yellow/yapps/dist/widget.js`;
-      console.log(yappsWidgetPath, "yappsWidgetPath");
-      
       const module = await import(yappsWidgetPath);
       const { YAppWidget } = module;
       const yAppWidget = new YAppWidget();
 
       const urlParams = new URLSearchParams(window.location.search);
       const myParam = urlParams.get("myParam");
+
+      // const chatComponentsDirective = window.location.hostname == "localhost" ? "" : "/components";
+      // console.log(chatComponentsDirective, "chatComponentsDirective")
+      // const yappsWidgetPath = `${chatComponentsDirective}/package/@yellow/yapps/dist/widget.js`;
+      // console.log(yappsWidgetPath, "yappsWidgetPath");
+      
+      // const module = await import(yappsWidgetPath);
+      // const { YAppWidget } = module;
+      // const yAppWidget = new YAppWidget();
+
+      // const urlParams = new URLSearchParams(window.location.search);
+      // const myParam = urlParams.get("myParam");
 
       const GroupCFMap = {
         "0000": "Service",
